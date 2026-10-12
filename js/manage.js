@@ -17,9 +17,9 @@
     $("rows").innerHTML=list.length?list.map(function(e){
       return '<tr><td>'+esc(e.name)+'<div class="small text-muted">'+esc(e.type)+'</div></td><td>'+esc(e.date)+'</td><td>'+esc(e.venue)+
       '</td><td class="text-end">'+e.guests+'</td><td class="text-end">'+money(e.budget)+'</td><td>'+badge(e.status)+
-      '</td><td class="text-nowrap"><button class="btn btn-sm btn-outline-primary me-1" data-act="edit" data-id="'+e.id+'">Edit</button>'+
-      '<button class="btn btn-sm btn-outline-danger" data-act="del" data-id="'+e.id+'">Delete</button></td></tr>';}).join("")
-      :'<tr><td colspan="7" class="text-center text-muted py-4">No events match.</td></tr>';
+      '</td><td class="text-end text-nowrap"><button class="btn btn-sm btn-outline-primary me-1" data-act="edit" data-id="'+e.id+'" title="Edit" aria-label="Edit '+esc(e.name)+'"><i class="bi bi-pencil"></i></button>'+
+      '<button class="btn btn-sm btn-outline-danger" data-act="del" data-id="'+e.id+'" title="Delete" aria-label="Delete '+esc(e.name)+'"><i class="bi bi-trash"></i></button></td></tr>';}).join("")
+      :'<tr><td colspan="7" class="text-center text-muted py-5"><i class="bi bi-calendar-x d-block mb-2" style="font-size:2rem"></i>No events match your search.</td></tr>';
     $("count").textContent="Showing "+list.length+" of "+events.length+" events";
   }
 
