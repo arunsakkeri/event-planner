@@ -2,21 +2,30 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Eventually Planner | Analytics</title>
+<title>Eventually | Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <div id="site-nav"></div>
-<main id="main" class="container my-5">
- <h1 class="h2">Event Analytics</h1>
- <p class="text-muted">Charts use the events on the Manage Events page, so any change you make there shows up here. The budget split is sample industry-style data.</p>
+<header class="page-head"><div class="container">
+ <h1 class="h2 mb-1"><i class="bi bi-bar-chart-line me-2"></i>Event Analytics</h1>
+ <p>Charts read the same events you manage, so edits there show up here.</p>
+</div></header>
+<main id="main" class="container my-4">
+ <div class="hint mb-3"><i class="bi bi-lightbulb me-1"></i>These numbers come from your event list. Add or edit events on the <a href="manageevents.html">Manage Events</a> page and refresh to see the charts change.</div>
+ <div class="row g-3 mb-4" id="kpis"></div>
  <div class="row g-4">
-  <div class="col-lg-6"><div class="card card-body"><h2 class="h5">Events by type</h2><div class="chart-box"><canvas id="typeChart" role="img" aria-label="Bar chart of event counts by type"></canvas></div></div></div>
-  <div class="col-lg-6"><div class="card card-body"><h2 class="h5">Budget split by category</h2><div class="chart-box"><canvas id="budgetChart" role="img" aria-label="Doughnut chart of budget share by category"></canvas></div></div></div>
-  <div class="col-12"><div class="card card-body"><h2 class="h5">Guests per month</h2><div class="chart-box"><canvas id="monthChart" role="img" aria-label="Line chart of total guests per month"></canvas></div></div></div>
+  <div class="col-lg-7"><div class="panel p-3 p-lg-4"><h2 class="h6 text-uppercase text-muted mb-3">Budget by event type</h2><div class="chart-box"><canvas id="typeChart" role="img" aria-label="Bar chart of total budget by event type"></canvas></div><p class="takeaway" id="tkType"></p></div></div>
+  <div class="col-lg-5"><div class="panel p-3 p-lg-4"><h2 class="h6 text-uppercase text-muted mb-3">Typical budget split</h2><div class="chart-box"><canvas id="budgetChart" role="img" aria-label="Doughnut chart of budget share by category"></canvas></div><p class="takeaway" id="tkBudget"></p></div></div>
+  <div class="col-lg-7"><div class="panel p-3 p-lg-4"><h2 class="h6 text-uppercase text-muted mb-3">Guests per month</h2><div class="chart-box"><canvas id="monthChart" role="img" aria-label="Line chart of total guests per month"></canvas></div><p class="takeaway" id="tkMonth"></p></div></div>
+  <div class="col-lg-5"><div class="panel p-3 p-lg-4"><h2 class="h6 text-uppercase text-muted mb-3">Events by status</h2><div class="chart-box"><canvas id="statusChart" role="img" aria-label="Bar chart of event counts by status"></canvas></div><p class="takeaway" id="tkStatus"></p></div></div>
  </div>
+ <p class="small text-muted mt-3">Sample data created for this class project. The budget split reflects typical event industry proportions and is illustrative.</p>
 </main>
 <div id="site-footer"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

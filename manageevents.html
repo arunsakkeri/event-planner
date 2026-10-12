@@ -2,47 +2,107 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Eventually Planner | Manage Events</title>
+<title>Eventually | Manage Events</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <div id="site-nav"></div>
-<main id="main" class="container my-5">
- <h1 class="h2">Manage Events</h1>
- <p class="text-muted">A mock CRUD page. Changes are saved only in your browser and do not go to a server.</p>
- <div id="msg" class="alert d-none" role="status"></div>
+<header class="page-head"><div class="container">
+ <h1 class="h2 mb-1"><i class="bi bi-calendar-check me-2"></i>Manage Events</h1>
+ <p>Add, edit and remove events. Everything saves in your browser, so nothing is sent anywhere.</p>
+</div></header>
+<main id="main" class="container my-4">
  <div class="row g-4">
   <div class="col-lg-4">
-   <form id="form" class="card card-body" novalidate>
-    <h2 class="h5" id="formTitle">Create event</h2>
-    <input type="hidden" id="eid">
-    <div class="mb-2"><label class="form-label" for="name">Event name</label><input class="form-control" id="name" required maxlength="60"><div class="invalid-feedback">Enter a name.</div></div>
-    <div class="mb-2"><label class="form-label" for="type">Type</label><select class="form-select" id="type"></select></div>
-    <div class="mb-2"><label class="form-label" for="date">Date</label><input type="date" class="form-control" id="date" required><div class="invalid-feedback">Pick a date.</div></div>
-    <div class="mb-2"><label class="form-label" for="venue">Venue</label><input class="form-control" id="venue" required maxlength="60"><div class="invalid-feedback">Enter a venue.</div></div>
-    <div class="row g-2 mb-2">
-     <div class="col"><label class="form-label" for="guests">Guests</label><input type="number" min="1" class="form-control" id="guests" required><div class="invalid-feedback">At least 1.</div></div>
-     <div class="col"><label class="form-label" for="budget">Budget ($)</label><input type="number" min="0" class="form-control" id="budget" required><div class="invalid-feedback">Enter 0 or more.</div></div>
-    </div>
-    <div class="mb-3"><label class="form-label" for="status">Status</label><select class="form-select" id="status"></select></div>
-    <div class="d-flex gap-2"><button class="btn btn-primary" type="submit" id="saveBtn">Add event</button><button class="btn btn-outline-secondary d-none" type="button" id="cancelBtn">Cancel edit</button></div>
-   </form>
+   <div class="panel p-3 p-lg-4" id="formPanel">
+    <h2 class="h5 mb-3" id="formTitle"><i class="bi bi-plus-circle me-1 text-primary"></i>Create event</h2>
+    <div class="edit-banner d-none mb-3" id="editBanner"></div>
+    <form id="form" novalidate>
+     <input type="hidden" id="eid">
+     <div class="mb-3"><label class="form-label small fw-semibold" for="name">Event name</label>
+      <input class="form-control" id="name" placeholder="Summer Gala" required maxlength="60">
+      <div class="invalid-feedback">Give the event a name so you can find it later.</div></div>
+     <div class="mb-3"><label class="form-label small fw-semibold" for="type">Type</label><select class="form-select" id="type"></select>
+      <div class="form-text">Used to group events on the analytics page.</div></div>
+     <div class="mb-3"><label class="form-label small fw-semibold" for="date">Date</label>
+      <input type="date" class="form-control" id="date" required>
+      <div class="invalid-feedback">Pick the date the event takes place.</div></div>
+     <div class="mb-3"><label class="form-label small fw-semibold" for="venue">Venue</label>
+      <input class="form-control" id="venue" placeholder="Tampa Convention Center" required maxlength="60">
+      <div class="invalid-feedback">Enter where the event is held.</div></div>
+     <div class="row g-2 mb-3">
+      <div class="col"><label class="form-label small fw-semibold" for="guests">Guests</label>
+       <input type="number" min="1" class="form-control" id="guests" placeholder="100" required>
+       <div class="invalid-feedback">Enter 1 or more.</div></div>
+      <div class="col"><label class="form-label small fw-semibold" for="budget">Budget ($)</label>
+       <input type="number" min="0" class="form-control" id="budget" placeholder="5000" required>
+       <div class="invalid-feedback">Enter 0 or more.</div></div>
+     </div>
+     <div class="mb-3"><label class="form-label small fw-semibold" for="status">Status</label><select class="form-select" id="status"></select>
+      <div class="form-text">Planned &rarr; Confirmed &rarr; Completed as the event firms up.</div></div>
+     <div class="d-flex gap-2">
+      <button class="btn btn-primary flex-grow-1" type="submit" id="saveBtn"><i class="bi bi-check-lg me-1"></i>Add event</button>
+      <button class="btn btn-outline-secondary d-none" type="button" id="cancelBtn">Cancel</button></div>
+    </form>
+   </div>
   </div>
   <div class="col-lg-8">
-   <div class="d-flex flex-wrap gap-2 mb-3">
-    <input class="form-control w-auto flex-grow-1" id="search" type="search" placeholder="Search by name or venue" aria-label="Search events">
-    <select class="form-select w-auto" id="filter" aria-label="Filter by status"><option value="">All statuses</option></select>
-    <button class="btn btn-outline-danger" id="resetBtn" type="button">Reset sample data</button>
+   <div class="panel p-3 p-lg-4">
+    <div class="d-flex flex-wrap gap-2 mb-2">
+     <div class="position-relative flex-grow-1"><i class="bi bi-search position-absolute" style="left:.85rem;top:.72rem;color:#9ca3af"></i>
+      <input class="form-control ps-5" id="search" type="search" placeholder="Search name, venue or type   (press / )" aria-label="Search events"></div>
+     <select class="form-select w-auto" id="filter" aria-label="Filter by status"><option value="">All statuses</option></select>
+     <button class="btn btn-outline-secondary" id="resetBtn" type="button"><i class="bi bi-arrow-counterclockwise me-1"></i>Reset</button>
+    </div>
+    <div id="chips" class="mb-2"></div>
+    <div class="table-responsive tbl-wrap"><table class="table table-hover align-middle">
+     <thead><tr>
+      <th class="sortable" data-key="name" tabindex="0" role="button" scope="col">Event <i class="arr bi bi-caret-down-fill"></i></th>
+      <th class="sortable" data-key="date" tabindex="0" role="button" scope="col">Date <i class="arr bi bi-caret-down-fill"></i></th>
+      <th class="sortable" data-key="venue" tabindex="0" role="button" scope="col">Venue <i class="arr bi bi-caret-down-fill"></i></th>
+      <th class="sortable text-end" data-key="guests" tabindex="0" role="button" scope="col">Guests <i class="arr bi bi-caret-down-fill"></i></th>
+      <th class="sortable text-end" data-key="budget" tabindex="0" role="button" scope="col">Budget <i class="arr bi bi-caret-down-fill"></i></th>
+      <th class="sortable" data-key="status" tabindex="0" role="button" scope="col">Status <i class="arr bi bi-caret-down-fill"></i></th>
+      <th class="text-end" scope="col"><span class="visually-hidden">Actions</span></th>
+     </tr></thead><tbody id="tblBody"></tbody></table></div>
+    <div class="m-list" id="mList"></div>
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mt-2">
+     <p class="small text-muted mb-0" id="count" aria-live="polite"></p>
+     <p class="small text-muted mb-0 d-none d-md-block">Tip: click a column heading to sort.</p>
+    </div>
    </div>
-   <div class="table-responsive"><table class="table table-hover align-middle">
-    <thead><tr><th>Event</th><th>Date</th><th>Venue</th><th class="text-end">Guests</th><th class="text-end">Budget</th><th>Status</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
-    <tbody id="rows"></tbody></table></div>
-   <p class="small text-muted" id="count"></p>
   </div>
  </div>
 </main>
+
+<div class="modal fade" id="delModal" tabindex="-1" aria-labelledby="delTitle" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered"><div class="modal-content" style="border-radius:1rem;border:0">
+  <div class="modal-body p-4 text-center">
+   <i class="bi bi-trash3 text-danger" style="font-size:2.2rem"></i>
+   <h2 class="h5 mt-2" id="delTitle">Delete this event?</h2>
+   <p class="text-muted mb-4">You are about to remove <strong id="delName"></strong>. You can undo straight after.</p>
+   <div class="d-flex gap-2"><button class="btn btn-outline-secondary flex-grow-1" data-bs-dismiss="modal">Keep it</button>
+    <button class="btn btn-danger flex-grow-1" id="confirmDel">Delete</button></div>
+  </div></div></div>
+</div>
+<div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetTitle" aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered"><div class="modal-content" style="border-radius:1rem;border:0">
+  <div class="modal-body p-4 text-center">
+   <i class="bi bi-arrow-counterclockwise text-primary" style="font-size:2.2rem"></i>
+   <h2 class="h5 mt-2" id="resetTitle">Restore sample events?</h2>
+   <p class="text-muted mb-4">This replaces your current list with the original sample data.</p>
+   <div class="d-flex gap-2"><button class="btn btn-outline-secondary flex-grow-1" data-bs-dismiss="modal">Cancel</button>
+    <button class="btn btn-primary flex-grow-1" id="confirmReset">Restore</button></div>
+  </div></div></div>
+</div>
+
+<div class="toast-box"><div id="msg" class="alert d-none" role="status" aria-live="polite"></div></div>
+<button class="to-top" id="toTop" aria-label="Back to top"><i class="bi bi-arrow-up"></i></button>
 <div id="site-footer"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/data.js"></script>
